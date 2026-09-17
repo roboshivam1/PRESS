@@ -36,8 +36,36 @@ text = { family = "Outfit", file = "fonts/Outfit-VF.ttf" }
 mono = { family = "Sometype Mono", file = "fonts/SometypeMono-VF.ttf" }
 
 [formats.specimen_card]
-mode = "falloff"         # "falloff" or "plate"
+source = "card"
+mode = "plate"           # "falloff" or "plate"
 photo_role = "hero"
 name_split = " - "       # "The Welder - Skull Edge Sitter" -> title / series line
 show_drop = true         # drop code top-right
 grain = true             # one grain pass over the finished card
+
+[outbox]
+path = "outbox"   # or "~/Library/Mobile Documents/com~apple~CloudDocs/PRESS/outbox" to reach it from your phone
+
+[formats.ledge]
+source = "piece"
+role = "hero"
+ratio = "4:5"
+treatment = "full"
+
+[formats.bench]
+source = "photo"
+ratio = "3:2"
+treatment = "full"
+
+[formats.failure]
+source = "photo"
+ratio = "4:5"            # --ratio 1:1 when it suits the shot
+treatment = "full"
+
+[formats.field_report]
+source = "photo"
+ratio = "4:5"
+treatment = "none"       # customer photos: crop only
+
+[formats.placement]
+source = "file"          # video, copied as-is
