@@ -1,0 +1,31 @@
+[brand]
+id = "basement-supply"
+name = "The Basement Supply Co."
+tagline = "Born below ground."
+
+[source]
+adapter = "basement_supply"
+repo_path = "~/Desktop/Development/other/Basement Supply"
+
+[palette]
+pitch = "#14100C"
+crate = "#201814"
+chalk = "#EFE6D8"
+dust  = "#9C8B78"
+bulb  = "#F2B03D"
+moss  = "#77855E"
+
+# [fonts] and [formats.*] arrive with the Composer batches.
+
+[treatment]
+saturation = 0.85        # 1.0 = unchanged, 0 = greyscale
+shadow_lift = 14         # levels (0-255) added at pure black, fading out by the midtones
+shadow_tint = "bulb"     # palette token or hex; sets the warmth of the lift
+grain_strength = 6       # grain intensity in levels
+grain_size = 1.4         # >1 = softer, larger grain
+
+[crops]
+width = 1080
+hero = "4:5"
+detail = "1:1"
+context = "3:2"
