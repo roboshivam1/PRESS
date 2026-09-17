@@ -29,3 +29,15 @@ width = 1080
 hero = "4:5"
 detail = "1:1"
 context = "3:2"
+
+[fonts]
+caps = { family = "Familjen Grotesk", file = "fonts/FamiljenGrotesk-VF.ttf" }
+text = { family = "Outfit", file = "fonts/Outfit-VF.ttf" }
+mono = { family = "Sometype Mono", file = "fonts/SometypeMono-VF.ttf" }
+
+[formats.specimen_card]
+mode = "falloff"         # "falloff" or "plate"
+photo_role = "hero"
+name_split = " - "       # "The Welder - Skull Edge Sitter" -> title / series line
+show_drop = true         # drop code top-right
+grain = true             # one grain pass over the finished card

@@ -65,7 +65,7 @@ class Treatment:
             grain_size=max(1.0, float(t.get("grain_size", 1.4))),
         )
 
-    def apply(self, img: Image.Image, seed: str) -> Image.Image:
+    def apply(self, img: Image.Image, seed: str, grain: bool = True) -> Image.Image:
         a = np.asarray(img.convert("RGB"), dtype=np.float32) / 255.0
         lum = a @ LUMA
 
@@ -78,7 +78,7 @@ class Treatment:
         a = a + (self.shadow_lift / 255.0) * weight[..., None] * tint
 
         # Mono film grain, strongest in the midtones.
-        if self.grain_strength > 0:
+        if grain and self.grain_strength > 0:
             h, w = lum.shape
             rng = np.random.default_rng(
                 int.from_bytes(hashlib.sha256(seed.encode()).digest()[:8], "big")

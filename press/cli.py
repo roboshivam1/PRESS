@@ -11,6 +11,7 @@ from .brand import PROJECT_ROOT, BrandError, load_brand
 from .compose.crops import crop_to_ratio, parse_ratio
 from .compose.treatment import Treatment, open_srgb, save_png
 from .sources import PHOTO_ROLES, get_source
+from .cli_card import register_card
 
 MISSING = re.compile(r"^No\. (\d{3}): missing (\w+) photo$")
 
@@ -122,6 +123,8 @@ def main(argv: list[str] | None = None) -> int:
     treat.add_argument("--all", action="store_true", help="every piece in the catalog")
     treat.add_argument("--compare", action="store_true", help="write before|after side by side")
     treat.set_defaults(func=cmd_treat)
+
+    register_card(sub)
 
     args = parser.parse_args(argv)
     try:

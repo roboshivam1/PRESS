@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+{% for f in fonts.values() %}
+@font-face {
+  font-family: "{{ f.family }}";
+  src: url("{{ f.src }}") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: block;
+}
+{% endfor %}
+:root {
+{% for token, hex in palette.items() %}
+  --{{ token }}: {{ hex }};
+{% endfor %}
+  --margin: {{ margin }}px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: {{ width }}px; height: {{ height }}px; }
+body { position: relative; overflow: hidden; background: var(--pitch); -webkit-font-smoothing: antialiased; }
+
+.photo { position: absolute; left: {{ box.x }}px; top: {{ box.y }}px; }
+.photo img { display: block; width: {{ box.photo_w }}px; height: {{ box.photo_h }}px; }
+
+/* Falloff: light holds upper-left, sinks deeper on the right and toward the label. */
+.photo.falloff img {
+  -webkit-mask-image: radial-gradient(ellipse 62% 58% at 44% 46%, #000 45%, transparent 100%),
+                      linear-gradient(to bottom, #000 70%, transparent 97%);
+  -webkit-mask-composite: source-in;
+  mask-image: radial-gradient(ellipse 62% 58% at 44% 46%, #000 45%, transparent 100%),
+              linear-gradient(to bottom, #000 70%, transparent 97%);
+  mask-composite: intersect;
+}
+/* Plate: the photograph mounted on a raised crate panel. */
+.photo.plate { padding: {{ box.pad }}px; background: var(--crate); }
+
+.num {
+  position: absolute; left: var(--margin); top: var(--margin);
+  font-family: "{{ fonts.mono.family }}"; font-weight: 400; font-size: 34px; line-height: 1;
+  letter-spacing: 0.06em; font-variant-numeric: tabular-nums; color: var(--bulb);
+}
+.drop {
+  position: absolute; right: var(--margin); top: calc(var(--margin) + 6px);
+  font-family: "{{ fonts.text.family }}"; font-weight: 300; font-size: 22px; line-height: 1;
+  letter-spacing: 0.22em; text-transform: uppercase; color: var(--dust);
+}
+.label { position: absolute; left: var(--margin); right: var(--margin); bottom: var(--margin); }
+.name {
+  font-family: "{{ fonts.caps.family }}"; font-weight: 700; font-size: 64px; line-height: 1;
+  letter-spacing: 0.02em; text-transform: uppercase; white-space: nowrap; color: var(--chalk);
+}
+.series {
+  margin-top: 14px;
+  font-family: "{{ fonts.text.family }}"; font-weight: 300; font-size: 22px; line-height: 1.2;
+  letter-spacing: 0.2em; text-transform: uppercase; white-space: nowrap; color: var(--dust);
+}
+</style>
+</head>
+<body>
+  <div class="photo {{ mode }}"><img src="{{ photo_src }}" alt=""></div>
+  <div class="num">{{ code }}</div>
+{% if drop_code %}
+  <div class="drop">{{ drop_code }}</div>
+{% endif %}
+  <div class="label">
+    <div class="name">{{ title }}</div>
+{% if series_label %}
+    <div class="series">{{ series_label }}</div>
+{% endif %}
+  </div>
+<script>
+window.pressLayout = async () => {
+  const checks = {{ font_checks | tojson }};
+  const missing = [];
+  for (const c of checks) {
+    try {
+      const faces = await document.fonts.load(c.query);
+      if (!faces.length) missing.push(c.family);
+    } catch (e) {
+      missing.push(c.family);
+    }
+  }
+  await document.fonts.ready;
+
+  const name = document.querySelector(".name");
+  let size = parseFloat(getComputedStyle(name).fontSize);
+  while (name.scrollWidth > name.clientWidth && size > 40) {
+    size -= 2;
+    name.style.fontSize = size + "px";
+  }
+  return missing;
+};
+</script>
+</body>
+</html>
