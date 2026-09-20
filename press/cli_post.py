@@ -82,7 +82,7 @@ def cmd_new(args) -> int:
 
     record = Record(
         id=post_id, brand=brand.id, format=key, subjects=[p.number for p in pieces],
-        date=date, notes=args.note or "", created=now(),
+        date=date, notes=args.note or "", arc=getattr(args, "arc", "") or "", created=now(),
         assets=[{"path": rel(p), "sha256": sha256(p)} for p in paths],
     )
     path = ledger.save(record)
@@ -218,6 +218,7 @@ def register_posts(sub) -> None:
     new.add_argument("--ratio", help="override the format's ratio, e.g. 1:1")
     new.add_argument("--date", help="YYYY-MM-DD, today, tomorrow, or a weekday")
     new.add_argument("--note", help="free-text note on the record")
+    new.add_argument("--arc", default="", help="drop-arc tag, e.g. drop-01:3")
     new.set_defaults(func=_guard(cmd_new))
 
     led = sub.add_parser("ledger", help="list posts, or show one")

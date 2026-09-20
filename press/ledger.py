@@ -14,7 +14,7 @@ from .brand import PROJECT_ROOT
 STATUSES = ("draft", "approved", "posted", "dropped")
 FILE = re.compile(r"^post-(\d{3,})\.yaml$")
 TEXT_FIELDS = ("brand", "format", "date", "status", "caption", "permalink", "notes",
-               "created", "approved", "posted")
+               "created", "approved", "posted", "arc")
 
 
 class LedgerError(Exception):
@@ -33,6 +33,7 @@ class Record:
     assets: list[dict] = field(default_factory=list)   # [{path, sha256}]
     permalink: str = ""
     notes: str = ""
+    arc: str = ""
     created: str = ""
     approved: str = ""
     posted: str = ""

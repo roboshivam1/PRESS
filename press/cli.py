@@ -12,6 +12,7 @@ from .compose.crops import crop_to_ratio, parse_ratio
 from .compose.treatment import Treatment, open_srgb, save_png
 from .sources import PHOTO_ROLES, get_source
 from .cli_card import register_card
+from .cli_plan import register_plan
 from .cli_post import register_posts
 
 MISSING = re.compile(r"^No\. (\d{3}): missing (\w+) photo$")
@@ -127,6 +128,7 @@ def main(argv: list[str] | None = None) -> int:
 
     register_card(sub)
     register_posts(sub)
+    register_plan(sub)
 
     args = parser.parse_args(argv)
     try:

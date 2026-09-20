@@ -69,3 +69,51 @@ treatment = "none"       # customer photos: crop only
 
 [formats.placement]
 source = "file"          # video, copied as-is
+
+[cadence]
+days = ["tuesday", "friday"]
+rotation = ["ledge", "bench", "specimen_card"]
+cooldown_posts = 6
+
+[cadence.drop_arc]
+enabled = true
+launch = "2026-11-14"
+
+[[cadence.drop_arc.sequence]]
+days_before = 14
+format = "specimen-card"
+count = 3
+note = "first three specimens"
+
+[[cadence.drop_arc.sequence]]
+days_before = 11
+format = "bench"
+count = 0
+note = "printing the drop"
+
+[[cadence.drop_arc.sequence]]
+days_before = 8
+format = "specimen-card"
+count = 3
+
+[[cadence.drop_arc.sequence]]
+days_before = 6
+format = "ledge"
+count = 1
+
+[[cadence.drop_arc.sequence]]
+days_before = 4
+format = "specimen-card"
+count = 3
+
+[[cadence.drop_arc.sequence]]
+days_before = 2
+format = "placement"
+count = 1
+note = "the piece set down"
+
+[[cadence.drop_arc.sequence]]
+days_before = 0
+format = "specimen-card"
+count = 4
+note = "drop day: the rest"
